@@ -79,3 +79,13 @@ SELECT store_id, staff_total_amount AS store_total_amount FROM store JOIN (SELEC
 SELECT store_id, city, country FROM store JOIN address ON store.address_id = address.address_id JOIN city ON address.city_id = city.city_id JOIN country ON city.country_id = country.country_id;
 
 #7h.
+SELECT name, SUM(amount) AS gross_revenue FROM category JOIN film_category ON category.category_id = film_category.category_id JOIN inventory ON film_category.film_id = inventory.film_id JOIN rental ON inventory.inventory_id = rental.inventory_id JOIN payment ON rental.rental_id = payment.rental_id GROUP BY name ORDER BY SUM(amount) DESC LIMIT 5;
+
+#8a.
+CREATE VIEW top_five_genres AS (SELECT name, SUM(amount) AS gross_revenue FROM category JOIN film_category ON category.category_id = film_category.category_id JOIN inventory ON film_category.film_id = inventory.film_id JOIN rental ON inventory.inventory_id = rental.inventory_id JOIN payment ON rental.rental_id = payment.rental_id GROUP BY name ORDER BY SUM(amount) DESC LIMIT 5);
+
+#8b.
+SELECT * FROM top_five_genres;
+
+#8c.
+DROP VIEW top_five_genres;
